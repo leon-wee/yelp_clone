@@ -32,7 +32,9 @@ Rails.application.routes.draw do
   #     resource :seller
   #   end
 
-  resources :restaurants
+  resources :restaurants do
+    resources :reviews
+  end
 
   # Example resource route with more complex sub-resources:
   #   resources :products do
