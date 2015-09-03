@@ -38,6 +38,13 @@ feature 'restaurants' do
       expect(current_path).to eq '/restaurants'
     end
 
+    scenario 'if not logged in, clicking add a restaurant redirects to log in page' do
+      click_link('Sign out')
+      visit('/restaurants')
+      click_link('Add a restaurant')
+      expect(current_path).to eq('/users/sign_in')
+    end
+
     context 'an invalid restaurant' do
       it 'does not let you submit a name that is too short' do
         visit '/restaurants'
@@ -63,7 +70,11 @@ feature 'restaurants' do
   end
 
   context 'editing restaurants' do
-    before { Restaurant.create name: 'KFC' }
+    before(:each) do
+      Restaurant.create name: 'KFC'
+      user = create(:user)
+      sign_in_as(user)
+    end
 
     scenario 'let a user edit a restaurant' do
       visit '/restaurants'
@@ -76,7 +87,11 @@ feature 'restaurants' do
   end
 
   context 'deleting restaurants' do
-    before { Restaurant.create name: 'KFC' }
+    before(:each) do
+      Restaurant.create name: 'KFC'
+      user = create(:user)
+      sign_in_as(user)
+    end
 
     scenario 'removes a restaurant when a user clicks a delete link' do
       visit '/restaurants'
