@@ -92,13 +92,28 @@ feature 'restaurants' do
   end
 
   context 'deleting restaurants' do
-    before { Restaurant.create name: 'KFC' }
+    before(:each) do
+      harry = build(:user)
+      sign_up_as(harry)
+      visit '/restaurants'
+      click_link 'Add a restaurant'
+      fill_in 'Name', with: 'KFC'
+      click_button 'Create Restaurant'
+    end
 
     scenario 'removes a restaurant when a user clicks a delete link' do
       visit '/restaurants'
       click_link 'Delete KFC'
       expect(page).not_to have_content 'KFC'
       expect(page).to have_content 'Restaurant deleted successfully'
+    end
+
+    scenario 'cannot remove restaurant if he is not the creator' do
+      click_link 'Sign out'
+      sally = build(:user, email: "sally@sally.com")
+      sign_up_as(sally)
+      visit('/restaurants')
+      expect(page).not_to have_link('Delete KFC')
     end
   end
 end
