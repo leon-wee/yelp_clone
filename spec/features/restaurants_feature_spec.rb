@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'byebug'
 
 feature 'restaurants' do
   context 'no restaurants have been added' do
@@ -29,7 +30,7 @@ feature 'restaurants' do
       sign_in_as(user)
     end
 
-    scenario 'prompts user to fill out a form, then displays the new restaurant' do
+    scenario 'prompts user to fill out a form, then displays the new restaurant if user is signed in' do
       visit '/restaurants'
       click_link 'Add a restaurant'
       fill_in 'Name', with: 'KFC'
@@ -76,13 +77,21 @@ feature 'restaurants' do
       sign_in_as(user)
     end
 
-    scenario 'let a user edit a restaurant' do
+    scenario 'let a user edit a restaurant if they created it' do
       visit '/restaurants'
       click_link 'Edit KFC'
       fill_in 'Name', with: 'Kentucky Fried Chicken'
       click_button 'Update Restaurant'
       expect(page).to have_content 'Kentucky Fried Chicken'
       expect(current_path).to eq '/restaurants'
+    end
+
+    scenario 'should not let a user edit a restaurant if they did not create it' do
+      click_link 'Sign out'
+      sally = build(:user, email: "sally@sally.com")
+      sign_up_as(sally)
+      visit '/restaurants'
+      expect(page).not_to have_content 'Edit KFC'
     end
   end
 
@@ -98,6 +107,14 @@ feature 'restaurants' do
       click_link 'Delete KFC'
       expect(page).not_to have_content 'KFC'
       expect(page).to have_content 'Restaurant deleted successfully'
+    end
+
+    scenario 'cannot remove restaurant if he is not the creator' do
+      click_link 'Sign out'
+      sally = build(:user, email: "sally@sally.com")
+      sign_up_as(sally)
+      visit('/restaurants')
+      expect(page).not_to have_link('Delete KFC')
     end
   end
 end
