@@ -72,9 +72,13 @@ feature 'restaurants' do
 
   context 'editing restaurants' do
     before(:each) do
-      Restaurant.create name: 'KFC'
-      user = create(:user)
-      sign_in_as(user)
+      user = build(:user)
+      sign_up_as(user)
+
+      visit '/restaurants'
+      click_link 'Add a restaurant'
+      fill_in 'Name', with: 'KFC'
+      click_button 'Create Restaurant'
     end
 
     scenario 'let a user edit a restaurant if they created it' do
@@ -91,15 +95,20 @@ feature 'restaurants' do
       sally = build(:user, email: "sally@sally.com")
       sign_up_as(sally)
       visit '/restaurants'
-      expect(page).not_to have_content 'Edit KFC'
+      click_link 'Edit KFC'
+      expect(page).to have_content "You can only edit restaurants you have created."
     end
   end
 
   context 'deleting restaurants' do
     before(:each) do
-      Restaurant.create name: 'KFC'
-      user = create(:user)
-      sign_in_as(user)
+      user = build(:user)
+      sign_up_as(user)
+
+      visit '/restaurants'
+      click_link 'Add a restaurant'
+      fill_in 'Name', with: 'KFC'
+      click_button 'Create Restaurant'
     end
 
     scenario 'removes a restaurant when a user clicks a delete link' do
@@ -114,7 +123,8 @@ feature 'restaurants' do
       sally = build(:user, email: "sally@sally.com")
       sign_up_as(sally)
       visit('/restaurants')
-      expect(page).not_to have_link('Delete KFC')
+      click_link 'Delete KFC'
+      expect(page).to have_content "You can only delete restaurants you have created."
     end
   end
 end

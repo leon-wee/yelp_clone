@@ -30,6 +30,10 @@ class RestaurantsController < ApplicationController
 
   def edit
     @restaurant = Restaurant.find(params[:id])
+    if current_user.id != @restaurant.user_id
+      flash[:notice] = "You can only edit restaurants you have created."
+      redirect_to restaurants_path
+    end
   end
 
   def update
@@ -40,8 +44,16 @@ class RestaurantsController < ApplicationController
 
   def destroy
     @restaurant = Restaurant.find(params[:id])
-    @restaurant.destroy
-    flash[:notice] = 'Restaurant deleted successfully'
+    if current_user.id != @restaurant.user_id
+      flash[:notice] = "You can only delete restaurants you have created."
+    else
+      @restaurant.destroy
+      flash[:notice] = 'Restaurant deleted successfully'
+    end
     redirect_to restaurants_path
+  end
+
+  def is_creator?(created_item)
+    current_user.id == created_item.user_id
   end
 end
