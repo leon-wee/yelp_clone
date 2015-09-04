@@ -45,6 +45,20 @@ describe Restaurant, type: :model do
       end
     end
 
+    context 'updating restaurant' do
+      let(:restaurant_params) { { name: 'Potato' } }
+
+      it 'can be updated by the creator' do
+        restaurant.update_as_user(restaurant_params, user)
+        expect(Restaurant.first.name).to eq('Potato')
+      end
+
+      it 'cannot be updated by someone else' do
+        restaurant.update_as_user(restaurant_params, user2)
+        expect(Restaurant.first.name).not_to eq('Potato')
+      end
+    end
+
   end
 
   describe 'Reviews' do
