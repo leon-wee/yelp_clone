@@ -46,8 +46,4 @@ describe Restaurant, type: :model do
     end
   end
 
-
-
-
-
 end
