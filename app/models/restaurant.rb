@@ -7,4 +7,8 @@ class Restaurant < ActiveRecord::Base
   validates_presence_of :user
   belongs_to :user
 
+  def average_rating
+    reviews.none? ? 'N/A' : reviews.average(:rating).to_i
+  end
+
 end
