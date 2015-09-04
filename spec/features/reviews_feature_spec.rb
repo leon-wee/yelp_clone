@@ -88,7 +88,7 @@ feature 'reviewing' do
       user2 = build(:user, email: 'example@example.com')
       sign_up_as(user2)
       leave_review('Great', '5')
-      expect(page).to have_content('Average rating: 4')
+      expect(page).to have_content('Average rating: ★★★★☆')
     end
   end
 
