@@ -38,8 +38,8 @@ class RestaurantsController < ApplicationController
 
   def update
     @restaurant = Restaurant.find(params[:id])
-    @restaurant.update(restaurant_params)
-    redirect_to '/restaurants'
+    @restaurant.update_as_user(restaurant_params, current_user)
+    redirect_to restaurants_path
   end
 
   def destroy
