@@ -11,6 +11,7 @@
             = review.thoughts
             %strong= review.rating
             \/5
+            = link_to "Delete Review", restaurant_review_path(restaurant, review), method: :delete
     - else
       %p No reviews
     = link_to restaurant.name, restaurant_path(restaurant)
