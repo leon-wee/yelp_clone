@@ -1,4 +1,6 @@
 class Review < ActiveRecord::Base
+  include AsUserAssociationExtension
+
   belongs_to :restaurant
   belongs_to :user
   validates :rating, inclusion: (1..5)

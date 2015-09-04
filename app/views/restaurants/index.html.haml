@@ -5,7 +5,7 @@
       = restaurant.name
 
     - if restaurant.reviews.any?
-      %ul
+      %ul#reviews
         - restaurant.reviews.each do |review|
           %li
             = review.thoughts
