@@ -14,7 +14,12 @@ feature 'restaurants' do
 
   context 'restaurants have been added' do
     before do
-      Restaurant.create(name: 'KFC')
+      user = build(:user)
+      sign_up_as(user)
+      visit('/restaurants')
+      click_link 'Add a restaurant'
+      fill_in 'Name', with: 'KFC'
+      click_button 'Create Restaurant'
     end
 
     scenario 'display restaurants' do
@@ -60,13 +65,19 @@ feature 'restaurants' do
 
   context 'viewing restaurants' do
 
-    let!(:kfc){Restaurant.create(name:'KFC')}
+    before(:each) do
+      user = build(:user)
+      sign_up_as(user)
+      visit('/restaurants')
+      click_link 'Add a restaurant'
+      fill_in 'Name', with: 'KFC'
+      click_button 'Create Restaurant'
+    end
 
     scenario 'let a user view a restaurant' do
       visit '/restaurants'
       click_link 'KFC'
       expect(page).to have_content 'KFC'
-      expect(current_path).to eq "/restaurants/#{kfc.id}"
     end
   end
 
