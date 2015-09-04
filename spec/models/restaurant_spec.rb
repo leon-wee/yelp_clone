@@ -28,6 +28,25 @@ describe Restaurant, type: :model do
     expect(restaurant).to be_valid
   end
 
+  describe 'Restaurant' do
+    let(:user) { create(:user) }
+    let(:user2) { create(:user, email: 'test@test.com') }
+    let(:restaurant) { create(:restaurant, user: user) }
+
+    context 'deleting restaurant' do
+      it 'can be deleted by the creator' do
+        restaurant.destroy_as_user(user)
+        expect(Restaurant.first).to be nil
+      end
+
+      it 'can be deleted by someone else' do
+        restaurant.destroy_as_user(user2)
+        expect(Restaurant.first).to eq restaurant
+      end
+    end
+
+  end
+
   describe 'Reviews' do
     describe 'build_with_user' do
       let(:user) { User.create(email: 'test@test.com') }
