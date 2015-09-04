@@ -39,7 +39,7 @@ describe Restaurant, type: :model do
         expect(Restaurant.first).to be nil
       end
 
-      it 'can be deleted by someone else' do
+      it 'cannot be deleted by someone else' do
         restaurant.destroy_as_user(user2)
         expect(Restaurant.first).to eq restaurant
       end
