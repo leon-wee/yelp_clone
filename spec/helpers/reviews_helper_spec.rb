@@ -17,5 +17,16 @@ describe ReviewsHelper, :type => :helper do
     it 'returns four black stars and one white star for 3.5' do
       expect(helper.star_rating(3.5)).to eq '★★★★☆'
     end
+
+  end
+
+  context '#time_created' do
+    it 'displays 0 hours ago when it is just created' do
+      expect(helper.time_created(Time.now)).to eq 'Created 0 hours ago'
+    end
+
+    it 'displays 2 hours ago' do
+      expect(helper.time_created(Time.now - 7200)).to eq 'Created 2 hours ago'
+    end
   end
 end

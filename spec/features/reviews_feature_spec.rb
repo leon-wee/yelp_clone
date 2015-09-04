@@ -90,6 +90,12 @@ feature 'reviewing' do
       leave_review('Great', '5')
       expect(page).to have_content('Average rating: ★★★★☆')
     end
+
+    scenario 'leaves time at which it is created' do
+      leave_review('So so', '3')
+      expect(page).to have_content("0 hours ago")
+    end
   end
+
 
 end
