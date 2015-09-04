@@ -9,6 +9,7 @@
         - restaurant.reviews.each do |review|
           %li
             = review.thoughts
+            %h3 Average rating: #{restaurant.average_rating.to_i}
             %strong= review.rating
             \/5
             = link_to "Delete Review", restaurant_review_path(restaurant, review), method: :delete
