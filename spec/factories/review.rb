@@ -5,5 +5,5 @@ FactoryGirl.define do
     rating 1
     restaurant
   end
-
+  
 end
