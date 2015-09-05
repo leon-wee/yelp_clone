@@ -52,6 +52,8 @@ group :development do
 end
 
 group :test do
+  gem 'poltergeist'
+  gem 'database_cleaner'
   gem 'byebug'
   gem 'rspec-collection_matchers'
   gem 'rspec-rails'

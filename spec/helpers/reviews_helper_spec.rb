@@ -28,5 +28,9 @@ describe ReviewsHelper, :type => :helper do
     it 'displays 2 hours ago' do
       expect(helper.time_created(Time.now - 7200)).to eq 'Created 2 hours ago'
     end
+
+    it 'displays 1 hour ago' do
+      expect(helper.time_created(Time.now - 3600)).to eq 'Created 1 hour ago'
+    end
   end
 end
