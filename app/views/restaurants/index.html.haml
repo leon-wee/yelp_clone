@@ -4,6 +4,8 @@
       Review for
       = restaurant.name
 
+      = image_tag restaurant.image.url(:thumb)
+
     - if restaurant.reviews.any?
       %ul#reviews
         - restaurant.reviews.each do |review|

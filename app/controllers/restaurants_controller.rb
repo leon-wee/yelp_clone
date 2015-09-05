@@ -20,10 +20,6 @@ class RestaurantsController < ApplicationController
     end
   end
 
-  def restaurant_params
-    params.require(:restaurant).permit(:name)
-  end
-
   def show
     @restaurant = Restaurant.find(params[:id])
   end
@@ -55,4 +51,9 @@ class RestaurantsController < ApplicationController
   def is_creator?(created_item)
     current_user.id == created_item.user_id
   end
+
+  def restaurant_params
+    params.require(:restaurant).permit(:name, :image)
+  end
+
 end
