@@ -14,7 +14,9 @@
             = time_created(review.created_at)
             %strong= review.rating
             \/5p
+            %p= pluralize review.endorsements.count, 'endorsement'
             = link_to "Delete Review", review_path(review), method: :delete
+            = link_to "Endorse Review", review_endorsements_path(review), method: :post
     - else
       %p No reviews
     = link_to restaurant.name, restaurant_path(restaurant)
