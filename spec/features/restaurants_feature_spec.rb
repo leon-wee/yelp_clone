@@ -137,4 +137,17 @@ feature 'restaurants' do
       expect(page).to have_content "You can only delete restaurants you have created."
     end
   end
+
+  context 'uploading images' do
+    scenario 'creators can upload images of restaurants' do
+      user = build(:user)
+      sign_up_as(user)
+      visit '/restaurants'
+      click_link 'Add a restaurant'
+      fill_in 'Name', with: 'KFC'
+      attach_file "restaurant[image]", 'spec/asset_spec/images/testing.png'
+      click_button 'Create Restaurant'
+      expect(page).to have_selector 'img'
+    end
+  end
 end
