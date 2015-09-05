@@ -1,8 +1,5 @@
 - if current_user
-  = form_for [@user, @restaurant] do |f|
-    = f.label :name
-    = f.text_field :name
-    = f.submit
+  = render "form"
 
   - if @restaurant.errors.any?
     %section#errors
