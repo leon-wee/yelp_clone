@@ -6,17 +6,16 @@ feature 'Endorsing reviews' do
     kfc_review = create(:review, rating: 3, thoughts: 'It was an abomination', restaurant: kfc)
   end
 
-  context 'Endorsements counts correctly' do
-    scenario 'a user can endorse a review, which updates the review endorsement count', js: true do
+  context 'Endorsements counts correctly', js: true do
+    scenario 'starts with 0 endorsements' do
       visit '/restaurants'
-      click_link 'Endorse Review'
-      expect(page).to have_content('1 endorsement')
+      expect(page).to have_content('0 endorsements')
     end
 
-    scenario 'Shows 2 counts' do
+    scenario 'a user can endorse a review, which updates the review endorsement count' do
       visit '/restaurants'
-      2.times { click_link 'Endorse Review' }
-      expect(page).to have_content('2 endorsements')
+      click_link 'Endorse'
+      expect(page).to have_content('1 endorsement')
     end
   end
 

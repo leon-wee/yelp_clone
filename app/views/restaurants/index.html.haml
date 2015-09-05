@@ -8,15 +8,14 @@
       %ul#reviews
         - restaurant.reviews.each do |review|
           %li
-            = review.thoughts
-            %h3 Average rating:
-            = star_rating(restaurant.average_rating)
+            #{review.thoughts} Average rating: #{star_rating(restaurant.average_rating)}
+            = link_to "Endorse", review_endorsements_path(review), class: 'endorsements-link'
+            %span.endorsements_count= review.endorsements.count
+            = 'endorsement'.pluralize review.endorsements.count
             = time_created(review.created_at)
             %strong= review.rating
-            \/5p
-            %p= pluralize review.endorsements.count, 'endorsement'
+            \/5
             = link_to "Delete Review", review_path(review), method: :delete
-            = link_to "Endorse Review", review_endorsements_path(review), method: :post
     - else
       %p No reviews
     = link_to restaurant.name, restaurant_path(restaurant)
