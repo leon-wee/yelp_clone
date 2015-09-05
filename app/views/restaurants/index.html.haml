@@ -13,8 +13,8 @@
             = star_rating(restaurant.average_rating)
             = time_created(review.created_at)
             %strong= review.rating
-            \/5
-            = link_to "Delete Review", restaurant_review_path(restaurant, review), method: :delete
+            \/5p
+            = link_to "Delete Review", review_path(review), method: :delete
     - else
       %p No reviews
     = link_to restaurant.name, restaurant_path(restaurant)
