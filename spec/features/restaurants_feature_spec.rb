@@ -147,7 +147,7 @@ feature 'restaurants' do
       fill_in 'Name', with: 'KFC'
       attach_file "restaurant[image]", 'spec/asset_spec/images/testing.png'
       click_button 'Create Restaurant'
-      expect(page).to have_selector 'img'
+      expect(page).to have_selector(:css, "img[src*='testing.png']")
     end
   end
 end
